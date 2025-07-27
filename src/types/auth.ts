@@ -3,19 +3,18 @@ export interface User {
   id: string;
   email: string;
   full_name: string;
-  phone?: string;
-  role: 'donor' | 'recipient' | 'admin';
+  role: string;
   is_verified: boolean;
-  is_two_factor_enabled?: boolean;
-  created_at?: string;
-  updated_at?: string;
+  avatar_url?: string;
+  phone?: string;
+  two_factor_enabled?: boolean;
 }
 
 export interface UserProfile {
   sub: string;
   email: string;
   full_name: string;
-  role: 'donor' | 'recipient' | 'admin';
+  role: 'donor' | 'beneficiary' | 'admin';
   is_verified: boolean;
   iat?: number;
   exp?: number;
@@ -75,6 +74,7 @@ export interface LoginResponse {
   access_token: string;
   refresh_token: string;
   user: User;
+  requiresTwoFactor?: boolean;
 }
 
 export interface RefreshTokenResponse {
@@ -113,10 +113,8 @@ export interface LoginHistoryResponse {
 
 // === Error Types ===
 export interface ErrorResponse {
-  message: string;
   error?: string;
-  code?: string;
-  details?: Record<string, unknown>; // ✅ Thay any bằng Record<string, unknown>
+  message?: string;
   statusCode?: number;
 }
 

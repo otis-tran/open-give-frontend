@@ -1,10 +1,13 @@
 'use client';
-import { ThemeProvider as NextThemes } from 'next-themes';
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+import { ThemeProvider as NextThemes } from 'next-themes';
+import { AuthProvider } from '@/context/AuthProvider';
+import { ReactNode } from 'react';
+
+export default function Providers({ children }: { children: ReactNode }) {
   return (
     <NextThemes attribute="class" defaultTheme="system" enableSystem>
-      {children}
+      <AuthProvider>{children}</AuthProvider>
     </NextThemes>
   );
 }

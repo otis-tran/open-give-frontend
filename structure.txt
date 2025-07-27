@@ -50,15 +50,18 @@
 │   │   ├── FormButton.tsx
 │   │   ├── FormInput.tsx
 │   │   └── ThemeSelector.tsx
+│   ├── context
+│   │   └── AuthProvider.tsx
 │   ├── hooks
 │   │   └── useAuth.ts
 │   ├── lib
 │   │   └── api.ts
 │   └── types
-│       └── auth.ts
+│       ├── auth.ts
+│       └── theme.ts
 ├── structure.txt
 ├── tailwind.config.ts
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-23 directories, 39 files
+24 directories, 41 files
