@@ -1,13 +1,32 @@
 'use client';
-
 import { ThemeProvider as NextThemes } from 'next-themes';
-import { AuthProvider } from '@/context/AuthProvider';
-import { ReactNode } from 'react';
+import type { ThemeProviderProps as NextThemeProviderProps } from 'next-themes';
+import { useEffect, useState } from 'react';
 
-export default function Providers({ children }: { children: ReactNode }) {
+interface ThemeProviderProps extends NextThemeProviderProps {
+  children: React.ReactNode;
+}
+
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div suppressHydrationWarning>{children}</div>;
+  }
+
   return (
-    <NextThemes attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <AuthProvider>{children}</AuthProvider>
+    <NextThemes
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+      {...props}
+    >
+      {children}
     </NextThemes>
   );
 }

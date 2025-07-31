@@ -1,12 +1,11 @@
-// components/ThemeSelector.tsx
 'use client';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
-export type Theme = 'light' | 'dark' | 'system';
+export type ThemeValue = 'light' | 'dark' | 'system';
 
 type ThemeOption = {
-  id: Theme;
+  id: ThemeValue;
   name: string;
   description: string;
 };
@@ -15,38 +14,45 @@ const themeOptions: ThemeOption[] = [
   {
     id: 'light',
     name: 'Light',
-    description: 'Bright color scheme',
+    description: 'For bright environments',
   },
   {
     id: 'dark',
     name: 'Dark',
-    description: 'Low-light color scheme',
+    description: 'For low-light conditions',
   },
   {
     id: 'system',
     name: 'System',
-    description: 'Follows your OS settings',
+    description: 'Sync with OS settings',
   },
 ];
 
 export default function ThemeSelector() {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, systemTheme, resolvedTheme } = useTheme();
 
-  // Effect chỉ chạy trên client, tránh hydration mismatch
-  useEffect(() => setMounted(true), []);
+  const getActiveState = useCallback(
+    (optionId: ThemeValue): boolean => {
+      if (optionId === 'system') return theme === 'system';
+      return theme === optionId || (theme === 'system' && resolvedTheme === optionId);
+    },
+    [theme, resolvedTheme],
+  );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
+    // Skeleton loader cải tiến
     return (
-      <div className="flex gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {themeOptions.map((option) => (
           <div
             key={option.id}
-            className="flex-1 p-4 rounded-lg bg-slate-200/30 dark:bg-slate-700/30 animate-pulse"
-          >
-            <div className="h-6 bg-slate-300 dark:bg-slate-600 rounded w-1/2 mb-2"></div>
-            <div className="h-4 bg-slate-300/70 dark:bg-slate-600/70 rounded w-3/4"></div>
-          </div>
+            className="h-28 p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/30 animate-pulse"
+          />
         ))}
       </div>
     );
@@ -54,28 +60,51 @@ export default function ThemeSelector() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {themeOptions.map((option) => (
-        <button
-          key={option.id}
-          onClick={() => setTheme(option.id)}
-          className={`text-left p-4 rounded-lg border-2 transition-all duration-200 ${
-            theme === option.id
-              ? 'border-blue-500 dark:border-cyan-500 bg-blue-50/50 dark:bg-cyan-900/20'
-              : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
-          }`}
-        >
-          <div
-            className={`font-medium mb-1 ${
-              theme === option.id
-                ? 'text-blue-600 dark:text-cyan-400'
-                : 'text-slate-700 dark:text-slate-300'
-            }`}
+      {themeOptions.map((option) => {
+        const isActive = getActiveState(option.id);
+        const isSystem = option.id === 'system';
+        const currentSystemTheme = isSystem ? `(${systemTheme})` : '';
+
+        return (
+          <button
+            key={option.id}
+            onClick={() => setTheme(option.id)}
+            className={`text-left p-4 rounded-lg border-2 transition-all
+              ${
+                isActive
+                  ? 'border-blue-500/80 dark:border-cyan-500 bg-blue-50/50 dark:bg-cyan-900/20'
+                  : 'border-slate-200/80 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
+              }`}
           >
-            {option.name}
-          </div>
-          <div className="text-sm text-slate-500 dark:text-slate-400">{option.description}</div>
-        </button>
-      ))}
+            <div className="space-y-1">
+              <div
+                className={`font-medium flex items-center gap-2 ${
+                  isActive
+                    ? 'text-blue-600 dark:text-cyan-400'
+                    : 'text-slate-700 dark:text-slate-300'
+                }`}
+              >
+                {option.name}
+                {isSystem && isActive && (
+                  <span className="text-xs px-2 py-1 rounded-full bg-blue-100/50 dark:bg-cyan-900/30">
+                    {systemTheme}
+                  </span>
+                )}
+              </div>
+
+              <div
+                className={`text-sm ${
+                  isActive
+                    ? 'text-slate-600 dark:text-slate-300'
+                    : 'text-slate-500 dark:text-slate-400'
+                }`}
+              >
+                {isSystem && isActive ? `Using ${systemTheme} mode from OS` : option.description}
+              </div>
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }
