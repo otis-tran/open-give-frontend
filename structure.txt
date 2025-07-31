@@ -20,6 +20,8 @@
 │   │   │       │   └── route.ts
 │   │   │       ├── login
 │   │   │       │   └── route.ts
+│   │   │       ├── profile
+│   │   │       │   └── route.ts
 │   │   │       ├── register
 │   │   │       │   └── route.ts
 │   │   │       └── reset-password
@@ -49,6 +51,8 @@
 │   │   ├── ErrorMessage.tsx
 │   │   ├── FormButton.tsx
 │   │   ├── FormInput.tsx
+│   │   ├── ProtectedRoute.tsx
+│   │   ├── ThemeDebugger.tsx
 │   │   └── ThemeSelector.tsx
 │   ├── context
 │   │   └── AuthProvider.tsx
@@ -64,4 +68,4 @@
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-24 directories, 41 files
+25 directories, 44 files

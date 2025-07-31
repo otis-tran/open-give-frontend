@@ -60,7 +60,7 @@ export default function ThemeSelector() {
         {SKELETON_ITEMS.map((i) => (
           <div
             key={i}
-            className={`h-24 rounded-xl ${isDark ? 'bg-slate-800/30' : 'bg-slate-100/50'}`}
+            className={`h-24 rounded-xl ${isDark ? 'bg-gray-800/30' : 'bg-gray-100/50'}`}
             aria-hidden="true"
           />
         ))}
@@ -72,11 +72,11 @@ export default function ThemeSelector() {
     `relative overflow-hidden p-5 rounded-xl border transition-all duration-300 flex flex-col items-start ${
       isActive
         ? isDark
-          ? 'border-cyan-500/30 bg-cyan-900/10 shadow-lg shadow-cyan-900/20'
-          : 'border-blue-500/30 bg-blue-50/50 shadow-lg shadow-blue-100'
+          ? 'border-blue-300 bg-blue-900/10 shadow-lg shadow-blue-900/20'
+          : 'border-blue-200 bg-blue-50 shadow-lg shadow-blue-100'
         : isDark
-          ? 'border-slate-700/80 hover:border-slate-600/70'
-          : 'border-slate-200/80 hover:border-slate-300/60'
+          ? 'border-gray-700 hover:border-gray-600'
+          : 'border-gray-200 hover:border-gray-300'
     }`;
 
   return (
@@ -101,12 +101,12 @@ export default function ThemeSelector() {
               <>
                 <div
                   className={`absolute inset-0 bg-gradient-to-b to-transparent ${
-                    isDark ? 'from-cyan-400/5' : 'from-blue-400/5'
+                    isDark ? 'from-blue-400/5' : 'from-blue-400/5'
                   }`}
                 />
                 <div
                   className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full animate-ping-once ${
-                    isDark ? 'bg-cyan-500' : 'bg-blue-500'
+                    isDark ? 'bg-blue-400' : 'bg-blue-600'
                   }`}
                 />
               </>
@@ -117,11 +117,11 @@ export default function ThemeSelector() {
                 className={`font-medium ${
                   isActive
                     ? isDark
-                      ? 'text-cyan-400'
-                      : 'text-blue-600'
+                      ? 'text-blue-200'
+                      : 'text-blue-800'
                     : isDark
-                      ? 'text-slate-300'
-                      : 'text-slate-600'
+                      ? 'text-gray-300'
+                      : 'text-gray-600'
                 }`}
               >
                 {option.name}
@@ -133,11 +133,11 @@ export default function ThemeSelector() {
               className={`text-sm text-left ${
                 isActive
                   ? isDark
-                    ? 'text-cyan-200'
-                    : 'text-blue-800/80'
+                    ? 'text-blue-200'
+                    : 'text-blue-800'
                   : isDark
-                    ? 'text-slate-400'
-                    : 'text-slate-500'
+                    ? 'text-gray-400'
+                    : 'text-gray-500'
               }`}
             >
               {isActive ? option.activeDescription : option.description}

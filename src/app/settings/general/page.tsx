@@ -18,8 +18,8 @@ export default function GeneralSettingsPage() {
     return (
       <div className="max-w-xl mx-auto py-10 px-4">
         <div className="animate-pulse">
-          <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded mb-8"></div>
-          <div className="h-96 bg-slate-200 dark:bg-slate-700 rounded"></div>
+          <div className={`h-8 rounded mb-8 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}></div>
+          <div className={`h-96 rounded ${isDark ? 'bg-gray-800' : 'bg-gray-50'}`}></div>
         </div>
       </div>
     );
@@ -27,54 +27,50 @@ export default function GeneralSettingsPage() {
 
   return (
     <div className="max-w-xl mx-auto py-10 px-4">
-      <h1 className={`text-2xl font-bold mb-8 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+      <h1 className={`text-2xl font-bold mb-8 ${isDark ? 'text-gray-50' : 'text-gray-900'}`}>
         General Settings
       </h1>
 
       <section
         className={`p-6 rounded-xl shadow-sm border ${
-          isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'
+          isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
         }`}
       >
         <div className="mb-6">
-          <h2
-            className={`text-lg font-semibold mb-1 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}
-          >
+          <h2 className={`text-lg font-semibold mb-1 ${isDark ? 'text-gray-50' : 'text-gray-900'}`}>
             Appearance
           </h2>
-          <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+          <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
             Customize how our app appears on your device
           </p>
         </div>
 
         <ThemeSelector />
 
-        <div className={`mt-6 pt-6 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
-          <h3
-            className={`text-sm font-medium mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
-          >
+        <div className={`mt-6 pt-6 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+          <h3 className={`text-sm font-medium mb-3 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
             Theme Preview
           </h3>
           <div className="flex gap-4">
             <div
               className={`flex-1 p-4 rounded-lg border ${
-                isDark ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'
+                isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'
               }`}
             >
               <div
                 className={`h-8 mb-2 rounded transition-colors ${
-                  isDark ? 'bg-cyan-500' : 'bg-blue-600'
+                  isDark ? 'bg-blue-400' : 'bg-blue-600'
                 }`}
               ></div>
               <div className="space-y-2">
                 <div
                   className={`h-4 rounded transition-colors ${
-                    isDark ? 'bg-slate-600' : 'bg-slate-300'
+                    isDark ? 'bg-gray-600' : 'bg-gray-300'
                   }`}
                 ></div>
                 <div
                   className={`h-4 rounded w-3/4 transition-colors ${
-                    isDark ? 'bg-slate-600' : 'bg-slate-300'
+                    isDark ? 'bg-gray-600' : 'bg-gray-300'
                   }`}
                 ></div>
               </div>
@@ -82,23 +78,23 @@ export default function GeneralSettingsPage() {
 
             <div
               className={`flex-1 p-4 rounded-lg border ${
-                isDark ? 'bg-slate-900 border-slate-600' : 'bg-white border-slate-300'
+                isDark ? 'bg-gray-900 border-gray-600' : 'bg-white border-gray-300'
               }`}
             >
               <div
                 className={`h-8 mb-2 rounded transition-colors ${
-                  isDark ? 'bg-cyan-500' : 'bg-blue-600'
+                  isDark ? 'bg-blue-300' : 'bg-blue-400'
                 }`}
               ></div>
               <div className="space-y-2">
                 <div
                   className={`h-4 rounded transition-colors ${
-                    isDark ? 'bg-slate-700' : 'bg-slate-200'
+                    isDark ? 'bg-gray-700' : 'bg-gray-200'
                   }`}
                 ></div>
                 <div
                   className={`h-4 rounded w-3/4 transition-colors ${
-                    isDark ? 'bg-slate-700' : 'bg-slate-200'
+                    isDark ? 'bg-gray-700' : 'bg-gray-200'
                   }`}
                 ></div>
               </div>
