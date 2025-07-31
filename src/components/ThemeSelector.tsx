@@ -14,9 +14,10 @@ type ThemeOption = {
 const SKELETON_ITEMS = [1, 2, 3];
 
 export default function ThemeSelector() {
-  const { theme, setTheme, systemTheme } = useTheme();
+  const { theme, setTheme, systemTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const safeSystemTheme = systemTheme || 'light'; // Fallback safety
+  const safeSystemTheme = systemTheme || 'light';
+  const isDark = resolvedTheme === 'dark';
 
   const themeOptions = useMemo<ThemeOption[]>(
     () => [
@@ -40,12 +41,11 @@ export default function ThemeSelector() {
       },
     ],
     [safeSystemTheme],
-  ); // ✅ Only rebuild when systemTheme changes
+  );
 
   const handleThemeChange = useCallback(
     (selectedTheme: ThemeValue) => {
       setTheme(selectedTheme);
-      // 💡 Can add analytics tracking here
     },
     [setTheme],
   );
@@ -60,7 +60,7 @@ export default function ThemeSelector() {
         {SKELETON_ITEMS.map((i) => (
           <div
             key={i}
-            className="h-24 rounded-xl bg-slate-100/50 dark:bg-slate-800/30"
+            className={`h-24 rounded-xl ${isDark ? 'bg-slate-800/30' : 'bg-slate-100/50'}`}
             aria-hidden="true"
           />
         ))}
@@ -71,8 +71,12 @@ export default function ThemeSelector() {
   const getCardClassName = (isActive: boolean) =>
     `relative overflow-hidden p-5 rounded-xl border transition-all duration-300 flex flex-col items-start ${
       isActive
-        ? 'border-blue-500/30 bg-blue-50/50 dark:bg-blue-900/10 shadow-lg shadow-blue-100 dark:shadow-blue-900/20'
-        : 'border-slate-200/80 hover:border-slate-300/60 dark:border-slate-700/80 dark:hover:border-slate-600/70'
+        ? isDark
+          ? 'border-cyan-500/30 bg-cyan-900/10 shadow-lg shadow-cyan-900/20'
+          : 'border-blue-500/30 bg-blue-50/50 shadow-lg shadow-blue-100'
+        : isDark
+          ? 'border-slate-700/80 hover:border-slate-600/70'
+          : 'border-slate-200/80 hover:border-slate-300/60'
     }`;
 
   return (
@@ -93,17 +97,32 @@ export default function ThemeSelector() {
             aria-checked={isActive}
             aria-describedby={`${option.id}-desc`}
           >
-            {/* Active indicator */}
             {isActive && (
               <>
-                <div className="absolute inset-0 bg-gradient-to-b from-blue-400/5 to-transparent" />
-                <div className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-blue-500 animate-ping-once" />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-b to-transparent ${
+                    isDark ? 'from-cyan-400/5' : 'from-blue-400/5'
+                  }`}
+                />
+                <div
+                  className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full animate-ping-once ${
+                    isDark ? 'bg-cyan-500' : 'bg-blue-500'
+                  }`}
+                />
               </>
             )}
 
             <div className="flex items-center gap-3 mb-3">
               <span
-                className={`font-medium ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-300'}`}
+                className={`font-medium ${
+                  isActive
+                    ? isDark
+                      ? 'text-cyan-400'
+                      : 'text-blue-600'
+                    : isDark
+                      ? 'text-slate-300'
+                      : 'text-slate-600'
+                }`}
               >
                 {option.name}
               </span>
@@ -111,7 +130,15 @@ export default function ThemeSelector() {
 
             <div
               id={`${option.id}-desc`}
-              className={`text-sm text-left ${isActive ? 'text-blue-800/80 dark:text-blue-200' : 'text-slate-500 dark:text-slate-400'}`}
+              className={`text-sm text-left ${
+                isActive
+                  ? isDark
+                    ? 'text-cyan-200'
+                    : 'text-blue-800/80'
+                  : isDark
+                    ? 'text-slate-400'
+                    : 'text-slate-500'
+              }`}
             >
               {isActive ? option.activeDescription : option.description}
             </div>
