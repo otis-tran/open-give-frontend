@@ -1,5 +1,7 @@
 .
 ├── README.md
+├── docs
+│   └── design-system.md
 ├── eslint.config.mjs
 ├── next-env.d.ts
 ├── next.config.ts
@@ -60,6 +62,11 @@
 │   │   └── useAuth.ts
 │   ├── lib
 │   │   └── api.ts
+│   ├── styles
+│   │   └── design-tokens.css
+│   ├── theme
+│   │   ├── tokens.ts
+│   │   └── utils.ts
 │   └── types
 │       ├── auth.ts
 │       └── theme.ts
@@ -68,4 +75,4 @@
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-25 directories, 44 files
+28 directories, 48 files
